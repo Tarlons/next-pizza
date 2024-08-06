@@ -5,6 +5,7 @@ import { cn } from '@/shared/lib/utils'
 import { Title } from './title'
 import Link from 'next/link'
 import { Ingredient } from '@prisma/client'
+import styles from '@/assets/modules.module.scss'
 
 interface Props {
 	id: number
@@ -24,23 +25,27 @@ export const ProductCard: React.FC<Props> = ({
 	className,
 }) => {
 	return (
-		<div className={cn(className)}>
+		<div className={cn(styles['product-card'], className)}>
 			<Link href={`/product/${id}`}>
-				<div className='flex justify-center p-6 bg-secondary rounded-lg h-[260px]'>
-					<img className='w-[215px] h-[215px]' src={imageUrl} alt={name} />
+				<div className='flex justify-center p-6 rounded-lg'>
+					<img
+						className='w-[13.4375rem] h-[13.4375rem]'
+						src={imageUrl}
+						alt={name}
+					/>
 				</div>
 
-				<Title text={name} size='sm' className='mb-1 mt-3 font-bold' />
+				<Title text={name} size='sm' className={styles['title']} />
 
 				<p className='text-sm text-gray-400'>
 					{ingredients.map(ingredient => ingredient.name).join(', ')}
 				</p>
 
-				<div className='flex justify-between items-center mt-4'>
-					<span className='text-[20px]'>
+				<div className={styles['price-container']}>
+					<span className={styles['price']}>
 						от <b>{price} ₽</b>
 					</span>
-					<Button variant='secondary' className='text-base font-bold'>
+					<Button variant='secondary' className={styles['button']}>
 						<Plus size={20} className='mr-1' />
 						Добавить
 					</Button>

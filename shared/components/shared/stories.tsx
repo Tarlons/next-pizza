@@ -7,6 +7,11 @@ import { Container } from './container'
 import { cn } from '@/shared/lib/utils'
 import { X } from 'lucide-react'
 import ReactStories from 'react-insta-stories'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { Navigation, Pagination } from 'swiper/modules'
 
 interface Props {
 	className?: string
@@ -50,16 +55,27 @@ export const Stories: React.FC<Props> = ({ className }) => {
 						/>
 					))}
 
-				{stories.map(story => (
-					<img
-						key={story.id}
-						onClick={() => onClickStory(story)}
-						className='rounded-md cursor-pointer'
-						height={250}
-						width={200}
-						src={story.previewImageUrl}
-					/>
-				))}
+				<Swiper
+					style={{
+						'--swiper-navigation-color': 'orange',
+					}}
+					spaceBetween={-30}
+					slidesPerView={5}
+					navigation
+					modules={[Navigation]}
+				>
+					{stories.map(story => (
+						<SwiperSlide key={story.id}>
+							<img
+								onClick={() => onClickStory(story)}
+								className='m-auto rounded-md cursor-pointer'
+								height={250}
+								width={200}
+								src={story.previewImageUrl}
+							/>
+						</SwiperSlide>
+					))}
+				</Swiper>
 
 				{open && (
 					<div className='absolute left-0 top-0 w-full h-full bg-black/80 flex items-center justify-center z-30'>

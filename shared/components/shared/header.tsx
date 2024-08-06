@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { AuthModal } from './modals/auth-modal'
 import { ProfileButton } from './profile-button'
+import style from '@/assets/modules.module.scss'
 
 interface Props {
 	hasSearch?: boolean
@@ -50,7 +51,7 @@ export const Header: React.FC<Props> = ({
 	}, [])
 
 	return (
-		<header className={cn('border-b border-gray-100', className)}>
+		<header className={cn('border-b border-gray-100', style.header, className)}>
 			<Container className='flex items-center justify-between py-8'>
 				<Link href='/'>
 					<div className='flex items-center gap-4'>

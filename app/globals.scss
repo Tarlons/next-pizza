@@ -1,9 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'mixins';
 
-html {
+html,
+body {
 	scroll-behavior: smooth;
+	font-size: 16px; /* Базовый размер шрифта */
+	@include respond-to(desktop) {
+		font-size: calc(10px + 0.27777778vw);
+	}
+
+	@include respond-to(tablet) {
+		font-size: calc(3px + 0.9844444444vw);
+	}
+
+	@include respond-to(mobile) {
+		font-size: 9px;
+	}
 }
 
 @media screen and (prefers-reduced-motion: reduce) {

@@ -8,6 +8,7 @@ import { cn } from '@/shared/lib/utils'
 import { ProductCard } from './product-card'
 import { useCategoryStore } from '@/shared/store'
 import { ProductWithRelations } from '@/@types/prisma'
+import styles from '@/assets/modules.module.scss'
 
 interface Props {
 	title: string
@@ -40,7 +41,7 @@ export const ProductsGroupList: React.FC<Props> = ({
 		<div className={className} id={title} ref={intersectionRef}>
 			<Title text={title} size='lg' className='font-extrabold mb-5' />
 
-			<div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
+			<div className={cn(styles['product-grid'], listClassName)}>
 				{items.map((product, i) => (
 					<ProductCard
 						key={product.id}
