@@ -56,9 +56,11 @@ export const Stories: React.FC<Props> = ({ className }) => {
 					))}
 
 				<Swiper
-					style={{
-						'--swiper-navigation-color': 'orange',
-					}}
+					style={
+						{
+							'--swiper-navigation-color': 'orange',
+						} as React.CSSProperties
+					}
 					spaceBetween={-30}
 					slidesPerView={5}
 					navigation
