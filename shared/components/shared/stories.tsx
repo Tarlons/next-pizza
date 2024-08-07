@@ -31,6 +31,18 @@ export const Stories: React.FC<Props> = ({ className }) => {
 		fetchStories()
 	}, [])
 
+	React.useEffect(() => {
+		if (open) {
+			document.body.style.overflow = 'hidden'
+		} else {
+			document.body.style.overflow = ''
+		}
+
+		return () => {
+			document.body.style.overflow = ''
+		}
+	}, [open])
+
 	const onClickStory = (story: IStory) => {
 		setSelectedStory(story)
 

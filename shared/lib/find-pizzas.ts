@@ -2,7 +2,7 @@ import { prisma } from '@/prisma/prisma-client'
 
 export interface GetSearchParams {
 	query?: string
-	sortBy?: string
+	sortBy?: string // 'price_asc' или 'price_desc'
 	sizes?: string
 	pizzaTypes?: string
 	ingredients?: string
@@ -21,11 +21,13 @@ export const findPizzas = async (params: GetSearchParams) => {
 	const minPrice = Number(params.priceFrom) || DEFAULT_MIN_PRICE
 	const maxPrice = Number(params.priceTo) || DEFAULT_MAX_PRICE
 
+	const sortOrder = params.sortBy === 'price_desc' ? 'desc' : 'asc'
+
 	const categories = await prisma.category.findMany({
 		include: {
 			products: {
 				orderBy: {
-					id: 'desc',
+					id: 'desc', // Основная сортировка по ID
 				},
 				where: {
 					ingredients: ingredientsIdArr
@@ -62,7 +64,7 @@ export const findPizzas = async (params: GetSearchParams) => {
 							},
 						},
 						orderBy: {
-							price: 'asc',
+							price: sortOrder, // Сортировка по цене
 						},
 					},
 				},
@@ -70,5 +72,16 @@ export const findPizzas = async (params: GetSearchParams) => {
 		},
 	})
 
-	return categories
+	// Сортируем продукты в категориях по цене
+	const sortedCategories = categories.map(category => {
+		const sortedProducts = category.products.map(product => {
+			const sortedItems = product.items.sort((a, b) => {
+				return sortOrder === 'asc' ? a.price - b.price : b.price - a.price
+			})
+			return { ...product, items: sortedItems }
+		})
+		return { ...category, products: sortedProducts }
+	})
+
+	return sortedCategories
 }
